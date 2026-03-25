@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -7,7 +9,6 @@
 #include "esp_rom_sys.h"
 #include "esp_heap_caps.h"
 
-// Adjust these to match your specific header names if different
 #include "esp_midi_define.h" 
 #include "solenoid.h"
 

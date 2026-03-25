@@ -1,5 +1,4 @@
-#ifndef SOLENOID_H
-#define SOLENOID_H
+#pragma once
 
 #include <stdint.h>
 #include "esp_err.h"
@@ -19,12 +18,10 @@ esp_err_t solenoid_init(const uint8_t* targetPins, const uint8_t enablePin);
 /**
  * @brief Trigger a solenoid strike based on a MIDI note
  * * @param midi_note The MIDI note number (0-127)
- * @param velocity
+ * * @param velocity
  */
 void solenoid_strike(uint8_t midiNote, uint8_t velocity);
 
 void solenoid_stop(void);
 
 void solenoid_test(void);
-
-#endif // SOLENOID_H
