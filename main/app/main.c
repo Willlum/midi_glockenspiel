@@ -4,9 +4,12 @@
 #include "freertos/event_groups.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+
 #include "midi_io.h"
 #include "midi_parser.h"
 #include "solenoid.h"
+#include "wifi_softap.h"
+#include "http_file_server.h"
 
 #define MOUNT_POINT "/sdcard"
 
@@ -24,21 +27,20 @@ const uint8_t targetPins[MAX_SOLENOIDS] = {
 
 const uint8_t enablePin = GPIO_NUM_13;
 
-//const char filePath[] = MOUNT_POINT"/AFROCUBA.MID";
-const char filePath[] = MOUNT_POINT"/AIR.MID";
-//const char filePath[] = MOUNT_POINT"/CT_PEA~1.MID";
-//const char filePath[] = MOUNT_POINT"/CT_FOR~1.MID";
-
 void app_main(void)
 {    
     solenoid_init(targetPins, enablePin);
-    
     //solenoid_test();
+    wifi_init_softap();
 
-    mount_sd();    
+    mount_sd();
     list_sd_contents(MOUNT_POINT);
 
-    read_midi_file(filePath, 1, -1);
-    
-    unmount_sd();
+    if (start_file_server() != ESP_OK) {
+        ESP_LOGE("MAIN", "Failed to start file server");
+    }
+
+    while (1) {
+        vTaskDelay(pdMS_TO_TICKS(10000));
+    }
 }
