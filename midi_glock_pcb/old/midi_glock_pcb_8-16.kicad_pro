@@ -39,9 +39,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 1.0,
-          "height": 3.5,
-          "width": 3.5
+          "drill": 1.2,
+          "height": 1.7,
+          "width": 1.7
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -61,7 +61,7 @@
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
           "min_clearance": 0.2,
-          "min_island_area": 400.0,
+          "min_island_area": 10.0,
           "min_thickness": 0.25,
           "pad_connection": 1,
           "remove_islands": 2,
@@ -140,7 +140,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.15,
+        "min_clearance": 0.0,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -152,8 +152,8 @@
         "min_silk_clearance": 0.0,
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
-        "min_through_hole_diameter": 0.2,
-        "min_track_width": 0.15,
+        "min_through_hole_diameter": 0.3,
+        "min_track_width": 0.0,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
@@ -165,7 +165,7 @@
           "td_onroundshapesonly": false,
           "td_onsmdpad": true,
           "td_ontrackend": false,
-          "td_onvia": false
+          "td_onvia": true
         }
       ],
       "teardrop_parameters": [
@@ -519,9 +519,9 @@
         "line_style": 0,
         "name": "24v0",
         "pcb_color": "rgb(232, 14, 0)",
-        "priority": 3,
+        "priority": 2,
         "schematic_color": "rgb(232, 14, 0)",
-        "track_width": 0.4,
+        "track_width": 3.0,
         "tuning_profile": "",
         "via_diameter": 0.6,
         "via_drill": 0.3,
@@ -529,16 +529,12 @@
       },
       {
         "bus_width": 24,
-        "clearance": 0.2,
         "line_style": 0,
         "name": "3v3",
         "pcb_color": "rgb(255, 144, 0)",
-        "priority": 4,
+        "priority": 3,
         "schematic_color": "rgb(255, 144, 0)",
-        "track_width": 0.5,
         "tuning_profile": "",
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
         "wire_width": 12
       },
       {
@@ -546,7 +542,7 @@
         "line_style": 0,
         "name": "DRV",
         "pcb_color": "rgb(132, 0, 132)",
-        "priority": 1,
+        "priority": 0,
         "schematic_color": "rgb(132, 0, 132)",
         "tuning_profile": "",
         "wire_width": 6
@@ -556,7 +552,7 @@
         "line_style": 0,
         "name": "SDMMC",
         "pcb_color": "rgb(46, 139, 138)",
-        "priority": 2,
+        "priority": 1,
         "schematic_color": "rgb(46, 139, 138)",
         "tuning_profile": "",
         "wire_width": 6
@@ -566,19 +562,10 @@
         "line_style": 0,
         "name": "SPI",
         "pcb_color": "rgb(159, 234, 54)",
-        "priority": 5,
+        "priority": 4,
         "schematic_color": "rgb(159, 234, 54)",
         "tuning_profile": "",
         "wire_width": 6
-      },
-      {
-        "clearance": 0.2,
-        "name": "Solenoids",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.4,
-        "tuning_profile": ""
       }
     ],
     "meta": {
@@ -606,10 +593,6 @@
       {
         "netclass": "DRV",
         "pattern": "/DRV*"
-      },
-      {
-        "netclass": "Solenoids",
-        "pattern": "/S[0-9]*"
       }
     ]
   },
@@ -695,78 +678,12 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
-        },
-        {
-          "group_by": false,
-          "label": "Field6",
-          "name": "Field6",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Field7",
-          "name": "Field7",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Field8",
-          "name": "Field8",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MANUFACTURER",
-          "name": "MANUFACTURER",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "MAXIMUM_PACKAGE_HEIGHT",
-          "name": "MAXIMUM_PACKAGE_HEIGHT",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "PARTREV",
-          "name": "PARTREV",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "STANDARD",
-          "name": "STANDARD",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Sim.Pins",
-          "name": "Sim.Pins",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Field5",
-          "name": "Field5",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Description",
-          "name": "Description",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "#",
-          "name": "${ITEM_NUMBER}",
-          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "",
+      "name": "Default Editing",
       "sort_asc": true,
       "sort_field": "Reference"
     },
@@ -819,7 +736,7 @@
         "uuid": "eb73d126-0950-44ce-a96b-844dbf133a97"
       }
     ],
-    "used_designators": "J1-7,RESET_SW1,#PWR1-53,BOOT_SW1,C1-22,D1-3,ENABLE_SW1,R1-12,L1,U1-5",
+    "used_designators": "J1-7,RESET_SW1,#PWR1-47,BOOT_SW1,C1-19,D1-3,ENABLE_SW1,R1-12,L1,U1-5",
     "variants": []
   },
   "sheets": [

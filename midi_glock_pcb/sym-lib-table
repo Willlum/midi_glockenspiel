@@ -1,4 +1,4 @@
 (sym_lib_table
-  (version 7)
-  (lib (name "2026-06-16_21-30-40")(type "KiCad")(uri "${KIPRJMOD}/footprints/DRV8912QPWPRQ1/KiCADv6/2026-06-16_21-30-40.kicad_sym")(options "")(descr ""))
+	(version 7)
+	(lib (name "midi_glock") (type "KiCad") (uri "${KIPRJMOD}/libraries") (options "") (descr ""))
 )
