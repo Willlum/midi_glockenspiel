@@ -1,0 +1,23 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,10.0.5-10.0.5~ubuntu24.04.1*%
+%TF.CreationDate,2026-09-06T20:16:33-05:00*%
+%TF.ProjectId,midi_glock_pcb,6d696469-5f67-46c6-9f63-6b5f7063622e,rev?*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,Profile,NP*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 10.0.5-10.0.5~ubuntu24.04.1) date 2026-09-06 20:16:33*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%TA.AperFunction,Profile*%
+%ADD10C,0.050000*%
+%TD*%
+G04 APERTURE END LIST*
+D10*
+X48000000Y-64700000D02*
+X100000000Y-64700000D01*
+X100000000Y-155000000D01*
+X48000000Y-155000000D01*
+X48000000Y-64700000D01*
+M02*
