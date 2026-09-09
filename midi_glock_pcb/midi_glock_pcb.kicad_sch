@@ -3608,6 +3608,129 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:TestPoint"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "DRV8912QPWPRQ1_1"
 			(pin_names
 				(offset 0.254)
@@ -6666,17 +6789,6 @@
 		)
 		(uuid "c42297d5-e815-4fe6-96ce-991cb9ad62ef")
 	)
-	(text "Todo:\n- Derate caps\n"
-		(exclude_from_sim yes)
-		(at 135.89 -42.926 0)
-		(effects
-			(font
-				(size 5.08 5.08)
-			)
-			(justify left)
-		)
-		(uuid "84bc73c0-fb2d-4895-abac-76909cc7cd35")
-	)
 	(junction
 		(at 288.29 189.23)
 		(diameter 0)
@@ -6706,6 +6818,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1192a2ad-82f4-47d7-89cb-3afd5766203b")
+	)
+	(junction
+		(at 71.12 38.1)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "1c7325d9-e385-4db7-a868-d6774d4784e0")
 	)
 	(junction
 		(at 295.91 189.23)
@@ -6748,6 +6866,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "3b7d7491-0ed7-4e82-bbe8-3dda6afc5ba0")
+	)
+	(junction
+		(at 63.5 50.8)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "41e03a67-98e1-4ab9-83aa-0ce02af38866")
 	)
 	(junction
 		(at 284.48 48.26)
@@ -6972,6 +7096,12 @@
 		(uuid "a9a82a30-9fcc-411e-8e4d-9affd78736e2")
 	)
 	(junction
+		(at 59.69 57.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "acb4668b-bdf1-4624-a637-72e1af8d0858")
+	)
+	(junction
 		(at 361.95 143.51)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -7048,6 +7178,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d683ac5b-901f-4239-868d-5fae5af58fa0")
+	)
+	(junction
+		(at 67.31 44.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "da89abe8-5db5-4af2-991b-735f57d39840")
 	)
 	(junction
 		(at 48.26 218.44)
@@ -7666,7 +7802,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 72.39) (xy 63.5 33.02)
+			(xy 63.5 72.39) (xy 63.5 50.8)
 		)
 		(stroke
 			(width 0)
@@ -7823,6 +7959,16 @@
 			(type default)
 		)
 		(uuid "12a8d9d7-adcb-4bf1-a920-c55f7bd78b60")
+	)
+	(wire
+		(pts
+			(xy 59.69 57.15) (xy 59.69 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "12ae40f9-dafd-4916-b8da-1ab5881057d1")
 	)
 	(wire
 		(pts
@@ -8063,6 +8209,16 @@
 			(type default)
 		)
 		(uuid "22816388-bc98-4dcf-9036-2aa977898d47")
+	)
+	(wire
+		(pts
+			(xy 63.5 50.8) (xy 63.5 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2292736b-3816-4134-8f84-e0ca8b69890a")
 	)
 	(wire
 		(pts
@@ -8626,7 +8782,7 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 69.85) (xy 59.69 33.02)
+			(xy 59.69 33.02) (xy 59.69 57.15)
 		)
 		(stroke
 			(width 0)
@@ -9474,6 +9630,16 @@
 		)
 		(uuid "76b68d88-e63a-4827-aab7-1117b59b03ee")
 	)
+	(wire
+		(pts
+			(xy 52.07 38.1) (xy 71.12 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "776f4f0a-dae7-4547-936f-a200c2ca2dc0")
+	)
 	(bus
 		(pts
 			(xy 191.77 138.43) (xy 191.77 140.97)
@@ -9696,7 +9862,7 @@
 	)
 	(wire
 		(pts
-			(xy 71.12 45.72) (xy 71.12 33.02)
+			(xy 71.12 45.72) (xy 71.12 38.1)
 		)
 		(stroke
 			(width 0)
@@ -10036,6 +10202,16 @@
 	)
 	(wire
 		(pts
+			(xy 67.31 44.45) (xy 67.31 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9682e994-72a8-4409-a1f0-32fa9146b278")
+	)
+	(wire
+		(pts
 			(xy 44.45 147.32) (xy 34.29 147.32)
 		)
 		(stroke
@@ -10053,6 +10229,16 @@
 			(type default)
 		)
 		(uuid "98bfadc0-1795-4fa3-bae2-85299e7be7e3")
+	)
+	(wire
+		(pts
+			(xy 52.07 57.15) (xy 59.69 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98ccc06c-4b89-4708-87c1-183ed2524f1c")
 	)
 	(wire
 		(pts
@@ -10356,7 +10542,7 @@
 	)
 	(wire
 		(pts
-			(xy 67.31 77.47) (xy 67.31 33.02)
+			(xy 67.31 77.47) (xy 67.31 44.45)
 		)
 		(stroke
 			(width 0)
@@ -10794,6 +10980,16 @@
 		)
 		(uuid "c90cc08e-f460-4079-ba1d-979937468d80")
 	)
+	(wire
+		(pts
+			(xy 52.07 50.8) (xy 63.5 50.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c9aa9ccc-98d9-4a89-bb1f-5f3b01e4f5c4")
+	)
 	(bus
 		(pts
 			(xy 191.77 146.05) (xy 191.77 148.59)
@@ -11073,6 +11269,16 @@
 			(type default)
 		)
 		(uuid "df8410c4-5452-4880-b9d7-322c38107c0a")
+	)
+	(wire
+		(pts
+			(xy 71.12 38.1) (xy 71.12 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dfe1a316-02f7-4ce0-902c-9058def0d3f3")
 	)
 	(wire
 		(pts
@@ -11403,6 +11609,16 @@
 			(type default)
 		)
 		(uuid "ff98101e-3cd8-4ce2-a1ad-9ac271f71866")
+	)
+	(wire
+		(pts
+			(xy 52.07 44.45) (xy 67.31 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ffadb486-3554-43b5-9659-b0f0e007647a")
 	)
 	(image
 		(at 502.92 238.76)
@@ -16530,6 +16746,82 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 52.07 57.15 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "65f90807-4eaa-400b-957e-b7c251a81f43")
+		(property "Reference" "TP4"
+			(at 44.958 55.372 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "CLK"
+			(at 44.704 57.658 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 52.07 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 52.07 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "020c0370-985f-41ce-9422-f3adb9e5b124")
+		)
+		(instances
+			(project "midi_glock_pcb"
+				(path "/eb73d126-0950-44ce-a96b-844dbf133a97"
+					(reference "TP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 270.51 30.48 90)
 		(unit 1)
@@ -18260,6 +18552,82 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 52.07 50.8 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "91a4ca82-d108-435b-bbd4-acd702db87e8")
+		(property "Reference" "TP3"
+			(at 44.45 49.276 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "CS"
+			(at 44.45 51.816 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 52.07 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 45.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 52.07 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5d017836-8bab-4559-a416-9f9f7c7ab111")
+		)
+		(instances
+			(project "midi_glock_pcb"
+				(path "/eb73d126-0950-44ce-a96b-844dbf133a97"
+					(reference "TP3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 142.24 59.69 180)
 		(unit 1)
@@ -19222,6 +19590,82 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 52.07 38.1 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "ae13b558-f49c-4e48-970d-01ca9261dc6e")
+		(property "Reference" "TP1"
+			(at 44.45 36.322 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MOSI"
+			(at 44.45 38.862 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 52.07 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 52.07 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b2bd98ec-b798-446c-b759-72987fbfcf59")
+		)
+		(instances
+			(project "midi_glock_pcb"
+				(path "/eb73d126-0950-44ce-a96b-844dbf133a97"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 261.62 52.07 0)
 		(unit 1)
@@ -19298,6 +19742,82 @@
 			(project "midi_glock_pcb"
 				(path "/eb73d126-0950-44ce-a96b-844dbf133a97"
 					(reference "C13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 52.07 44.45 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "af2355bf-bc20-4025-bd59-af3542189996")
+		(property "Reference" "TP2"
+			(at 44.704 42.926 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MISO"
+			(at 44.704 45.466 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 52.07 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 39.37 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 52.07 44.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2b36064a-8afe-4a6f-a0a4-b053c7251e64")
+		)
+		(instances
+			(project "midi_glock_pcb"
+				(path "/eb73d126-0950-44ce-a96b-844dbf133a97"
+					(reference "TP2")
 					(unit 1)
 				)
 			)
