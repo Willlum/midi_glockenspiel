@@ -55,9 +55,6 @@ void unmount_sd(void)
     ESP_LOGI(TAG, "Card unmounted");
 }
 
-/**
- * Iterates through the SD card and prints all files and directories in root.
- */
 void list_sd_contents(const char *path) 
 {
     ESP_LOGI(TAG, "Listing objects in %s:", path);
