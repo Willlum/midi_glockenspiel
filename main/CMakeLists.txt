@@ -2,8 +2,6 @@ set(srcs
     "app/main.c"
     "app/midi_io.c"
     "app/solenoid.c"
-    "app/wifi_softap.c"
-    "app/http_file_server.c"
     "app/midi_parser.c"
 )
 
