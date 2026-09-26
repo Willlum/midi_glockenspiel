@@ -1,5 +1,6 @@
 set(srcs
     "app/main.c"
+    "app/drv8912.c"
     "app/midi_io.c"
     "app/solenoid.c"
     "app/midi_parser.c"
@@ -10,7 +11,7 @@ set(include_dirs
     "include"
 )
 
-set(requires fatfs esp_timer)
+set(requires driver fatfs esp_timer)
 
 idf_component_register(SRCS "${srcs}"
                        INCLUDE_DIRS "${include_dirs}"
