@@ -9,7 +9,6 @@
 #include "sdkconfig.h"
 #include "esp_log.h"
 
-#define MOUNT_POINT "/sdcard"
 static const char *TAG = "MIDI_IO";
 static sdmmc_card_t *card;    
 static const char mount_point[] = MOUNT_POINT;

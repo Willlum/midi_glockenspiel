@@ -6,11 +6,14 @@
 #include "freertos/task.h"
 
 #include "drv8912.h"
+#include "esp_log.h"
 
 #define DRV8912_HEADER_BYTES 2
 #define DRV8912_FRAME_SIZE(count) (DRV8912_HEADER_BYTES + 2 * (count))
 #define DRV8912_READ_BIT 0x40
 #define DRV8912_CLEAR_FAULT_BIT 0x20
+
+static const char *TAG = "drv8912";
 
 struct drv8912_context {
     spi_device_handle_t spi_device;
@@ -53,9 +56,8 @@ static esp_err_t drv8912_transfer(drv8912_handle_t handle,
         return err;
     }
 
-    if (rx[handle->device_count] != tx[0] || rx[handle->device_count + 1] != tx[1]) {
-        return ESP_ERR_INVALID_RESPONSE;
-    }
+    const bool header_matches = rx[handle->device_count] == tx[0] &&
+                                rx[handle->device_count + 1] == tx[1];
 
     for (uint8_t device = 0; device < handle->device_count; device++) {
         const size_t chain_index = handle->device_count - 1 - device;
@@ -65,6 +67,16 @@ static esp_err_t drv8912_transfer(drv8912_handle_t handle,
         if (read_values != NULL) {
             read_values[device] = rx[DRV8912_HEADER_BYTES + handle->device_count + chain_index];
         }
+    }
+
+    if (!header_matches) {
+        ESP_LOGE(TAG, "SPI header echo mismatch: got %02X %02X, expected %02X %02X",
+                 rx[handle->device_count], rx[handle->device_count + 1], tx[0], tx[1]);
+        ESP_LOGE(TAG, "SPI RX frame:");
+        for (size_t i = 0; i < frame_size; i++) {
+            ESP_LOGI(TAG, "rx[%u] = 0x%02X", (unsigned)i, rx[i]);
+        }
+        return ESP_ERR_INVALID_RESPONSE;
     }
 
     return ESP_OK;
@@ -143,7 +155,7 @@ esp_err_t drv8912_init(const drv8912_config_t *config, drv8912_handle_t *out_han
         .quadhd_io_num = -1,
         .max_transfer_sz = DRV8912_FRAME_SIZE(config->device_count),
     };
-    err = spi_bus_initialize(config->spi_host, &bus_config, SPI_DMA_CH_AUTO);
+    err = spi_bus_initialize(config->spi_host, &bus_config, 0);
     if (err != ESP_OK) {
         free(handle);
         return err;
@@ -154,8 +166,6 @@ esp_err_t drv8912_init(const drv8912_config_t *config, drv8912_handle_t *out_han
         .mode = 1,
         .spics_io_num = config->cs_gpio,
         .queue_size = 1,
-        .cs_ena_pretrans = 2,
-        .cs_ena_posttrans = 2,
     };
     err = spi_bus_add_device(config->spi_host, &device_config, &handle->spi_device);
     if (err != ESP_OK) {
@@ -175,6 +185,21 @@ esp_err_t drv8912_init(const drv8912_config_t *config, drv8912_handle_t *out_han
     if (handle->sleep_gpio != GPIO_NUM_NC) {
         gpio_set_level(handle->sleep_gpio, 1);
         vTaskDelay(pdMS_TO_TICKS(5));
+    }
+
+    uint8_t config_addresses[DRV8912_MAX_DEVICES];
+    uint8_t config_values[DRV8912_MAX_DEVICES] = {0};
+    for (uint8_t device = 0; device < handle->device_count; device++) {
+        config_addresses[device] = DRV8912_REG_CONFIG_CTRL;
+        config_values[device] = 1U << 1; // EXT_OVP: 33 V overvoltage threshold
+    }
+    err = drv8912_write_registers(handle, config_addresses, config_values);
+    if (err != ESP_OK) {
+        vSemaphoreDelete(handle->mutex);
+        spi_bus_remove_device(handle->spi_device);
+        spi_bus_free(config->spi_host);
+        free(handle);
+        return err;
     }
 
     *out_handle = handle;
@@ -317,9 +342,10 @@ esp_err_t drv8912_clear_faults(drv8912_handle_t handle)
     return err;
 }
 
+// Enable or disable one half-bridge (high-side or low-side) on one device in the chain.
 esp_err_t drv8912_set_half_bridge(drv8912_handle_t handle,
                                   uint8_t device,
-                                  uint8_t channel,
+                                  uint8_t channel,      // 1..12 (HB1..HB12)
                                   bool high_side,
                                   bool enabled)
 {
@@ -328,34 +354,67 @@ esp_err_t drv8912_set_half_bridge(drv8912_handle_t handle,
         return ESP_ERR_INVALID_ARG;
     }
 
+    // --- Locate the register and bit for this half-bridge ---
+    // Table 17: the 12 half-bridges are split across three OP_CTRL registers
+    //   OP_CTRL_1 (0x08) -> HB1..HB4,  
+    //   OP_CTRL_2 (0x09) -> HB5..HB8,
+    //   OP_CTRL_3 (0x0A) -> HB9..HB12.
     const uint8_t address = DRV8912_REG_OP_CTRL_1 + (channel - 1) / 4;
+
+    // Within each OP_CTRL register, every HB occupies a 2-bit field laid out as
+    // (Table 17, e.g. OP_CTRL_1):
+    //   bit7 HB4_HS_EN, bit6 HB4_LS_EN, ... bit1 HB1_HS_EN, bit0 HB1_LS_EN
+    // So for the HB's index-within-register (0..3): LS = even bit (2*idx),
+    // HS = odd bit (2*idx + 1).
     const uint8_t bit = 2 * ((channel - 1) % 4) + (high_side ? 1 : 0);
+
     uint8_t addresses[DRV8912_MAX_DEVICES];
-    uint8_t values[DRV8912_MAX_DEVICES] = {0};
+    uint8_t values[DRV8912_MAX_DEVICES]   = {0};
     uint8_t statuses[DRV8912_MAX_DEVICES];
+
+    // Daisy chain (sect. 8.5.3.1): one address+data byte is shifted per device
+    // in a single frame, so every device in the chain must be given a command.
+    // For the devices we don't want to disturb, target IC_STAT (0x00): it is a
+    // read-only status register (Table 17), so a write to it is a harmless no-op.
     for (uint8_t i = 0; i < handle->device_count; i++) {
         addresses[i] = DRV8912_REG_IC_STAT;
     }
     addresses[device] = address;
 
     xSemaphoreTake(handle->mutex, portMAX_DELAY);
+
+    // --- Read-modify-write ---
+    // Read the current OP_CTRL value first so the other three HBs sharing this
+    // register are preserved. Per sect. 8.5.2, a read (R/W = 1) returns the
+    // register's current contents in the report byte (Table 14 / Fig. 72).
     esp_err_t err = drv8912_transfer(handle, addresses, values, true, false, values, statuses);
     if (err == ESP_OK) {
         if (enabled) {
-            values[device] |= 1U << bit;
+            // Set the requested side, and clear its partner within the same pair.
+            // Note (sect. 8.3.1.1.1 NOTE / Table 2): if both HS_EN and LS_EN of a
+            // half-bridge are set, that HB is forced Hi-Z (shoot-through guard),
+            // so we explicitly clear the opposite bit. (bit ^ 1 = partner bit.)
+            values[device] |=  1U << bit;
             values[device] &= ~(1U << (bit ^ 1U));
         } else {
+            // Disable: clear only this side. With both sides 0 the HB coasts
+            // (Hi-Z / Motor Coast, Table 2).
             values[device] &= ~(1U << bit);
         }
+
+        // Rebuild the frame for the write pass (R/W = 0). Re-assert the target
+        // address and hold every other device at IC_STAT (read-only no-op) with
+        // data 0, so only the intended device's OP_CTRL register is modified.
         addresses[device] = address;
         for (uint8_t i = 0; i < handle->device_count; i++) {
             if (i != device) {
                 addresses[i] = DRV8912_REG_IC_STAT;
-                values[i] = 0;
+                values[i]    = 0;
             }
         }
         err = drv8912_transfer(handle, addresses, values, false, false, NULL, NULL);
     }
+
     xSemaphoreGive(handle->mutex);
     return err;
 }

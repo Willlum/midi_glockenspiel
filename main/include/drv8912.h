@@ -27,6 +27,7 @@ typedef struct {
 
 typedef enum {
     DRV8912_REG_IC_STAT = 0x00,
+    DRV8912_REG_CONFIG_CTRL = 0x07,
     DRV8912_REG_OP_CTRL_1 = 0x08,
     DRV8912_REG_OP_CTRL_2 = 0x09,
     DRV8912_REG_OP_CTRL_3 = 0x0A,
