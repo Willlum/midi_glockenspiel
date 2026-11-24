@@ -48,7 +48,7 @@ static void drv_output_test_task(void *arg)
         for (uint8_t channel = 1; channel <= DRV8912_CHANNELS_PER_DEVICE; channel++) {
             ESP_LOGI(TAG, "Device %u, channel %u high side ON", device, channel);
             ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, device, channel, true, true));
-            vTaskDelay(pdMS_TO_TICKS(20));
+            vTaskDelay(pdMS_TO_TICKS(10));
             ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, device, channel, true, false));
             vTaskDelay(pdMS_TO_TICKS(100));
         }
