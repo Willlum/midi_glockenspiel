@@ -5,6 +5,7 @@
 #include "esp_log.h"
 #include "drv8912.h"
 #include "midi_io.h"
+#include "note_map.h"
 
 static const char *TAG = "drv8912";
 
@@ -42,19 +43,25 @@ static void blink_task(void *arg)
 static void drv_output_test_task(void *arg)
 {
     drv8912_handle_t drv = (drv8912_handle_t)arg;
-    const uint8_t device_count = drv8912_get_device_count(drv);
 
-    for (uint8_t device = 0; device < device_count; device++) {
-        for (uint8_t channel = 1; channel <= DRV8912_CHANNELS_PER_DEVICE; channel++) {
-            ESP_LOGI(TAG, "Device %u, channel %u high side ON", device, channel);
-            ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, device, channel, true, true));
-            vTaskDelay(pdMS_TO_TICKS(10));
-            ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, device, channel, true, false));
-            vTaskDelay(pdMS_TO_TICKS(100));
+    for (uint16_t midi_note = NOTE_MAP_MIN_MIDI_NOTE; midi_note <= NOTE_MAP_MAX_MIDI_NOTE; midi_note++) {
+        const note_map_entry_t *output = note_map_get((uint8_t)midi_note);
+        if (output == NULL) {
+            ESP_LOGE(TAG, "No output mapping for MIDI note %u", midi_note);
+            break;
         }
+
+        ESP_LOGI(TAG, "MIDI note %u, device %u, channel %u high side ON",
+                 midi_note, output->device_index, output->channel);
+        ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, output->device_index,
+                                                output->channel, output->high_side, true));
+        vTaskDelay(pdMS_TO_TICKS(10));
+        ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, output->device_index,
+                                                output->channel, output->high_side, false));
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 
-    ESP_LOGI(TAG, "High-side output test complete");
+    ESP_LOGI(TAG, "Note sequence test complete");
     vTaskDelete(NULL);
 }
 
