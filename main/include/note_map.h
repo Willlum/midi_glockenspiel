@@ -14,7 +14,7 @@ typedef struct {
     bool high_side;
 } note_map_entry_t;
 
-// Device indexes follow the chain order used in main.c: U2, U1, U3.
+// Device indexes follow the chain order used in main.c: U2=0, U1=1, U3=2.
 // Channels are DRV8912 half-bridges 1..12. Each entry also notes its PCB connector pin.
 static const note_map_entry_t note_map_entries[NOTE_MAP_COUNT] = {
     {0, 4, true},  // MIDI 77,  F5,  J2-1

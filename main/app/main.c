@@ -58,7 +58,7 @@ static void drv_output_test_task(void *arg)
         vTaskDelay(pdMS_TO_TICKS(10));
         ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, output->device_index,
                                                 output->channel, output->high_side, false));
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(250));
     }
 
     ESP_LOGI(TAG, "Note sequence test complete");
