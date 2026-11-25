@@ -5,7 +5,7 @@
 #include "esp_log.h"
 #include "drv8912.h"
 #include "midi_io.h"
-#include "note_map.h"
+#include "new_playback.h"
 
 static const char *TAG = "drv8912";
 
@@ -19,6 +19,7 @@ static const char *TAG = "drv8912";
 #define LED_IO_0   32   // D2 (LED1)
 #define LED_IO_1   33   // D1 (LED2)
 #define N_DRV      3
+#define MIDI_FILE_PATH MOUNT_POINT "/XMAS.MID"
 
 static void blink_task(void *arg)
 {
@@ -40,28 +41,14 @@ static void blink_task(void *arg)
     }
 }
 
-static void drv_output_test_task(void *arg)
+static void new_playback_task(void *arg)
 {
     drv8912_handle_t drv = (drv8912_handle_t)arg;
-
-    for (uint16_t midi_note = NOTE_MAP_MIN_MIDI_NOTE; midi_note <= NOTE_MAP_MAX_MIDI_NOTE; midi_note++) {
-        const note_map_entry_t *output = note_map_get((uint8_t)midi_note);
-        if (output == NULL) {
-            ESP_LOGE(TAG, "No output mapping for MIDI note %u", midi_note);
-            break;
-        }
-
-        ESP_LOGI(TAG, "MIDI note %u, device %u, channel %u high side ON",
-                 midi_note, output->device_index, output->channel);
-        ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, output->device_index,
-                                                output->channel, output->high_side, true));
-        vTaskDelay(pdMS_TO_TICKS(10));
-        ESP_ERROR_CHECK(drv8912_set_half_bridge(drv, output->device_index,
-                                                output->channel, output->high_side, false));
-        vTaskDelay(pdMS_TO_TICKS(250));
+    esp_err_t err = new_playback(MIDI_FILE_PATH, drv, -1, -1);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Playback failed: %s", esp_err_to_name(err));
     }
 
-    ESP_LOGI(TAG, "Note sequence test complete");
     vTaskDelete(NULL);
 }
 
@@ -126,11 +113,11 @@ void app_main(void)
     ESP_ERROR_CHECK(blink_task_created == pdPASS ? ESP_OK : ESP_FAIL);
 
     if (chain_verified) {
-        BaseType_t test_task_created = xTaskCreate(drv_output_test_task, "drv_test", 3072,
-                                                   drv, 5, NULL);
-        ESP_ERROR_CHECK(test_task_created == pdPASS ? ESP_OK : ESP_FAIL);
+        BaseType_t playback_task_created = xTaskCreate(new_playback_task, "midi_playback",
+                                                       8192, drv, 5, NULL);
+        ESP_ERROR_CHECK(playback_task_created == pdPASS ? ESP_OK : ESP_FAIL);
     } else {
-        ESP_LOGE(TAG, "Skipping high-side scan because the daisy chain did not verify");
+        ESP_LOGE(TAG, "Skipping MIDI playback because the daisy chain did not verify");
     }
 
 

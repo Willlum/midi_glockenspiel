@@ -4,6 +4,7 @@ set(srcs
     "app/midi_io.c"
     "app/solenoid.c"
     "app/midi_parser.c"
+    "app/new_playback.c"
 )
 
 set(include_dirs

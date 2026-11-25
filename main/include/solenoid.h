@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "drv8912.h"
 #include "esp_err.h"
 
 #define MAX_SOLENOIDS 8
@@ -14,13 +15,14 @@
  * @return esp_err_t 
  */
 esp_err_t solenoid_init(const uint8_t* targetPins, const uint8_t enablePin);
+esp_err_t solenoid_init_drv(drv8912_handle_t driver);
 
 /**
  * @brief Trigger a solenoid strike based on a MIDI note
  * * @param midi_note The MIDI note number (0-127)
  * * @param velocity
  */
-void solenoid_strike(uint8_t midiNote, uint8_t velocity);
+esp_err_t solenoid_strike(uint8_t midiNote, uint8_t velocity);
 
 void solenoid_stop(void);
 
